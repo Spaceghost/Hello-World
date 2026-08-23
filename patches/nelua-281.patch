@@ -1,3 +1,53 @@
+diff --git a/lualib/nelua/cdefs.lua b/lualib/nelua/cdefs.lua
+--- a/lualib/nelua/cdefs.lua
++++ b/lualib/nelua/cdefs.lua
+@@ -9,4 +9,46 @@
+   ['_Noreturn'] = true,
+   ['_Static_assert'] = true,
+ 
++  -- C++
++  ['catch'] = true,
++  ['char8_t'] = true,
++  ['char16_t'] = true,
++  ['char32_t'] = true,
++  ['class'] = true,
++  ['co_await'] = true,
++  ['co_return'] = true,
++  ['co_yield'] = true,
++  ['concept'] = true,
++  ['consteval'] = true,
++  ['constexpr'] = true,
++  ['constinit'] = true,
++  ['const_cast'] = true,
++  ['decltype'] = true,
++  ['delete'] = true,
++  ['dynamic_cast'] = true,
++  ['explicit'] = true,
++  ['export'] = true,
++  ['friend'] = true,
++  ['mutable'] = true,
++  ['namespace'] = true,
++  ['new'] = true,
++  ['noexcept'] = true,
++  ['nullptr'] = true,
++  ['operator'] = true,
++  ['private'] = true,
++  ['protected'] = true,
++  ['public'] = true,
++  ['reinterpret_cast'] = true,
++  ['requires'] = true,
++  ['static_cast'] = true,
++  ['template'] = true,
++  ['this'] = true,
++  ['throw'] = true,
++  ['try'] = true,
++  ['typeid'] = true,
++  ['typename'] = true,
++  ['using'] = true,
++  ['virtual'] = true,
++  ['wchar_t'] = true,
++
+   -- C extensions
 diff --git a/spec/cgenerator_spec.lua b/spec/cgenerator_spec.lua
 --- a/spec/cgenerator_spec.lua
 +++ b/spec/cgenerator_spec.lua
