@@ -1,0 +1,43 @@
+name: Nelua issue 281 final verification
+
+on:
+  push:
+    branches:
+      - nelua-281-final-verify
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout candidate
+        uses: actions/checkout@v4
+        with:
+          path: harness
+
+      - name: Checkout Nelua
+        uses: actions/checkout@v4
+        with:
+          repository: edubart/nelua-lang
+          ref: a58450563e2d2ec49bff499865c8b5cfdf6ff81a
+          path: nelua
+
+      - name: Apply candidate patch
+        run: git -C nelua apply ../harness/patches/nelua-281.patch
+
+      - name: Build Nelua
+        run: make -C nelua
+
+      - name: Run Nelua tests
+        run: make -C nelua test
+
+      - name: Compile issue reproducer with g++
+        working-directory: nelua
+        run: ./nelua --cc g++ --eval 'local function f(this: integer) return this end; assert(f(1) == 1)'
+
+      - name: Compile issue reproducer with clang++
+        working-directory: nelua
+        run: ./nelua --cc clang++ --eval 'local function f(this: integer) return this end; assert(f(1) == 1)'
