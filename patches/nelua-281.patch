@@ -103,3 +103,16 @@ diff --git a/spec/cgenerator_spec.lua b/spec/cgenerator_spec.lua
 +      'int64_t '..keyword..'_')
 +  end
    expect.run_c([[
+diff --git a/spec/runner_spec.lua b/spec/runner_spec.lua
+--- a/spec/runner_spec.lua
++++ b/spec/runner_spec.lua
+@@ -1,4 +1,13 @@
+ end)
+ 
++it("compile C++ reserved names", function()
++  local code = 'local function f(this: integer) return this end; assert(f(1) == 1)'
++  expect.run({'--no-cache', '--cc', 'g++', '--eval', code})
++  expect.run({'--no-cache', '--cc', 'clang++', '--eval', code})
++end)
++
+ it("error on parsing an invalid program" , function()
