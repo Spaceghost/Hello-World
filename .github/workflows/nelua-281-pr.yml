@@ -1,0 +1,35 @@
+name: Nelua issue 281 PR workbench
+
+on:
+  pull_request:
+    branches:
+      - nelua-281-ci-base
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout candidate
+        uses: actions/checkout@v4
+        with:
+          path: harness
+
+      - name: Checkout Nelua
+        uses: actions/checkout@v4
+        with:
+          repository: edubart/nelua-lang
+          ref: master
+          path: nelua
+
+      - name: Apply candidate patch
+        run: git -C nelua apply ../harness/patches/nelua-281.patch
+
+      - name: Build Nelua
+        run: make -C nelua
+
+      - name: Run Nelua tests
+        run: make -C nelua test
