@@ -100,6 +100,6 @@ diff --git a/spec/cgenerator_spec.lua b/spec/cgenerator_spec.lua
 +  for _,keyword in ipairs(cpp_keywords) do
 +    expect.generate_c(
 +      'do local '..keyword..': integer end',
-+      'int64_t '..keyword..'_ = 0;')
++      'int64_t '..keyword..'_')
 +  end
    expect.run_c([[
