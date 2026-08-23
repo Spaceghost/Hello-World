@@ -1,0 +1,74 @@
+diff --git a/spec/init.lua b/spec/init.lua
+index 2c3a452..ede0ac8 100644
+--- a/spec/init.lua
++++ b/spec/init.lua
+@@ -9,6 +9,7 @@ require 'spec.except_spec'
+ require 'spec.bn_spec'
+ require 'spec.pegger_spec'
+ require 'spec.utils_spec'
++require 'spec.cdefs_spec'
+ require 'spec.aster_spec'
+ require 'spec.syntaxdefs_spec'
+ require 'spec.analyzer_spec'
+diff --git a/spec/cdefs_spec.lua b/spec/cdefs_spec.lua
+new file mode 100644
+index 0000000..85f44ea
+--- /dev/null
++++ b/spec/cdefs_spec.lua
+@@ -0,0 +1,56 @@
++local lester = require 'nelua.thirdparty.lester'
++local describe, it = lester.describe, lester.it
++
++local cdefs = require 'nelua.cdefs'
++
++describe("C definitions", function()
++
++it("C++ reserved keywords", function()
++  local keywords = {
++    'catch',
++    'char8_t',
++    'char16_t',
++    'char32_t',
++    'class',
++    'co_await',
++    'co_return',
++    'co_yield',
++    'concept',
++    'consteval',
++    'constexpr',
++    'constinit',
++    'const_cast',
++    'decltype',
++    'delete',
++    'dynamic_cast',
++    'explicit',
++    'export',
++    'friend',
++    'mutable',
++    'namespace',
++    'new',
++    'noexcept',
++    'nullptr',
++    'operator',
++    'private',
++    'protected',
++    'public',
++    'reinterpret_cast',
++    'requires',
++    'static_cast',
++    'template',
++    'this',
++    'throw',
++    'try',
++    'typeid',
++    'typename',
++    'using',
++    'virtual',
++    'wchar_t',
++  }
++  for _,keyword in ipairs(keywords) do
++    assert(cdefs.quotename(keyword) == keyword .. '_')
++  end
++end)
++
++end)
