@@ -1,30 +1,11 @@
-diff --git a/spec/init.lua b/spec/init.lua
-index 2c3a452..ede0ac8 100644
---- a/spec/init.lua
-+++ b/spec/init.lua
-@@ -9,6 +9,7 @@ require 'spec.except_spec'
- require 'spec.bn_spec'
- require 'spec.pegger_spec'
- require 'spec.utils_spec'
-+require 'spec.cdefs_spec'
- require 'spec.aster_spec'
- require 'spec.syntaxdefs_spec'
- require 'spec.analyzer_spec'
-diff --git a/spec/cdefs_spec.lua b/spec/cdefs_spec.lua
-new file mode 100644
-index 0000000..85f44ea
---- /dev/null
-+++ b/spec/cdefs_spec.lua
-@@ -0,0 +1,56 @@
-+local lester = require 'nelua.thirdparty.lester'
-+local describe, it = lester.describe, lester.it
-+
-+local cdefs = require 'nelua.cdefs'
-+
-+describe("C definitions", function()
-+
-+it("C++ reserved keywords", function()
-+  local keywords = {
+diff --git a/spec/cgenerator_spec.lua b/spec/cgenerator_spec.lua
+--- a/spec/cgenerator_spec.lua
++++ b/spec/cgenerator_spec.lua
+@@ -5,4 +5,51 @@
+   expect.generate_c("do local default: integer end", "int64_t default_ = 0;")
+   expect.generate_c("do local NULL: integer = 0 end", "int64_t NULL_ = 0;")
+   expect.config.srcname = nil
++  local cpp_keywords = {
 +    'catch',
 +    'char8_t',
 +    'char16_t',
@@ -66,9 +47,9 @@ index 0000000..85f44ea
 +    'virtual',
 +    'wchar_t',
 +  }
-+  for _,keyword in ipairs(keywords) do
-+    assert(cdefs.quotename(keyword) == keyword .. '_')
++  for _,keyword in ipairs(cpp_keywords) do
++    expect.generate_c(
++      'do local '..keyword..': integer end',
++      'int64_t '..keyword..'_ = 0;')
 +  end
-+end)
-+
-+end)
+   expect.run_c([[
